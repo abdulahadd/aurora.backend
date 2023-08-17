@@ -10,7 +10,6 @@ export class RoleService {
 
     async getRoles(): Promise<Role[]>{
         const roles=await this.roleRepository.find({});
-        console.log(roles);
         return roles.map((role)=>role);
 
     }

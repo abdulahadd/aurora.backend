@@ -15,10 +15,6 @@ export class AuthController {
     async signIn(@Body() signInDTo: signInDTo, @Res({ passthrough: true }) response: Response) {
 
         const access_token= await this.authService.signIn(signInDTo.username, signInDTo.password);
-        response.cookie('Login-Cookie', access_token, {
-            httpOnly: true, // Cookie cannot be accessed through client-side JavaScript
-            maxAge: jwtConstants.expiresIn, // Set the expiration time for the cookie
-          });
 
         return access_token;
     }

@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsBoolean, IsEmail, IsNotEmpty, IsNumber, IsNumberString, IsString } from "class-validator";
 import { Role } from "../../roles/models/role.schema";
 
 export class UserModel { 
@@ -17,7 +17,7 @@ export class UserModel {
     @IsNotEmpty()
     password: string;
 
-    @IsNumber()
+    @IsNumberString()
     @IsNotEmpty()
     age: number;
 
@@ -27,6 +27,10 @@ export class UserModel {
     @IsString()
     @IsNotEmpty()
     role: string;
+
+    @IsBoolean()
+    isRegistered: boolean;
+
  
 
 }

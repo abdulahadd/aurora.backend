@@ -5,14 +5,16 @@ import { UpdateUserDto } from '../../dtos/updateUserDto';
 import { SerializedUser } from '../../utils/types'; 
 import { AuthGuard } from '../../../auth/guards/auth.guard';
 import { UserModel } from '../../Models/user.model';
-@Controller('users')
+import { SuperUserGuard } from '../../../auth/guards/super.user.guard';
+@Controller('/users')
 export class UsersController {
     constructor(private readonly userService: UsersService){}
 
     @UseGuards(AuthGuard)
+    @UseGuards(SuperUserGuard)
     @UseInterceptors(ClassSerializerInterceptor)
     @Get('/all/:s_username')
-    async getUsers(): Promise<User[]>{
+    async getUsers(@Param('username') username: string): Promise<User[]>{
         return this.userService.getUsers();
     }
 
@@ -25,15 +27,16 @@ export class UsersController {
         return new SerializedUser(user);
     }
 
-    @UseGuards(AuthGuard)
-    @Post(':s_username')
+    
+    @Post('')
     @UsePipes(ValidationPipe)
     async createUser(@Body() user: UserModel): Promise<User>{
+        console.log("Body: ", user)
         return this.userService.createUser(user);
     }
 
     @UseGuards(AuthGuard)
-    @Patch(':s_username')
+    @Patch('/patch/:username/:s_username')
     async updateUser(@Param('username') username: string, @Body() updateUserDto: UpdateUserDto): Promise<User>{
         return this.userService.updateUser(username, updateUserDto);
     }

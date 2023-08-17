@@ -10,7 +10,6 @@ export class OrganisationService {
 
     async getOrganisations(): Promise<Organisation[]>{
         const orgs=await this.orgRepository.find({});
-        console.log(orgs);
         return orgs.map((org)=>org);
 
     }
