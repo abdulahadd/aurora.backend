@@ -11,9 +11,8 @@ export class Event {
     startDate: Date;
 
     @Prop({ required: true })
-    startTime: string;
+    endDate: Date;
 
-    
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);

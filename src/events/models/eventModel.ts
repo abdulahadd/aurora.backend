@@ -15,7 +15,7 @@ export class EventModel {
 
     @IsString()
     @IsNotEmpty()
-    startTime: string;
+    endDate: Date;
  
 
 }
