@@ -5,9 +5,10 @@ import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { OrganisationModule } from './organisation/organisation.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
-  imports: [UsersModule, MongooseModule.forRoot('mongodb://localhost/iproject'), AuthModule,  PermissionsModule,RolesModule, OrganisationModule],
+  imports: [UsersModule, MongooseModule.forRoot('mongodb://localhost/iproject'), AuthModule,  PermissionsModule,RolesModule, OrganisationModule, EventsModule],
   controllers: [],
   providers: [],
 })
