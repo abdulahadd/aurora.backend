@@ -24,8 +24,9 @@ export class EventsController {
         return this.eventService.createEvent(event);
     }
     
-    @Patch('/patch/:id/')
-    async updateUser(@Param('id') Id: string, @Body() updateEventDto: UpdateEventDto): Promise<Event>{
+    @Patch('/patch/:title/')
+    async updateUser(@Param('title') Id: string, @Body() updateEventDto: UpdateEventDto): Promise<Event>{
+        console.log(Id);
         return this.eventService.updateEvent(Id, updateEventDto);
     }
 }

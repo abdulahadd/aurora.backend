@@ -11,11 +11,11 @@ export class EventModel {
     @IsString()
     @IsNotEmpty()
     @IsEmail()
-    startDate: Date;
+    start: Date;
 
     @IsString()
     @IsNotEmpty()
-    endDate: Date;
+    end: Date;
  
 
 }

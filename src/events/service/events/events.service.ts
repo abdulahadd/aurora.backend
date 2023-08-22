@@ -13,8 +13,8 @@ export class EventsService {
         return events.map((event)=> plainToClass(Event, event));
     }
 
-    async getEventById(Id: string): Promise<any>{
-        const event= await this.eventRepository.findOne({Id});
+    async getEventById(title: string): Promise<any>{
+        const event= await this.eventRepository.findOne({title});
         if(event)
         {
             return event;
@@ -30,14 +30,14 @@ export class EventsService {
     }
 
 
-    async updateEvent(Id: string ,updateEventDto: UpdateEventDto): Promise<Event>{
-        const event=await this.eventRepository.findOne({Id});
+    async updateEvent(title: string ,updateEventDto: UpdateEventDto): Promise<Event>{
+        const event=await this.eventRepository.findOne({title});
         if(!event)
         {
             throw new UnprocessableEntityException("User Not Found");
         }
 
-        return this.eventRepository.findOneAndUpdate({Id}, updateEventDto);
+        return this.eventRepository.findOneAndUpdate({title}, updateEventDto);
     }
 
 

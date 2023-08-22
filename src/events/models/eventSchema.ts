@@ -8,10 +8,10 @@ export class Event {
     title : string;
 
     @Prop({ required: true })
-    startDate: Date;
+    start: Date;
 
     @Prop({ required: true })
-    endDate: Date;
+    end: Date;
 
 }
 
