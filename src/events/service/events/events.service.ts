@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { EventsRepository } from '../../repository/event.repository';
 import { plainToClass } from 'class-transformer';
 import { EventModel } from '../../models/eventModel';
@@ -7,39 +13,51 @@ import { Event } from '../../models/eventSchema';
 
 @Injectable()
 export class EventsService {
-    constructor(private readonly eventRepository: EventsRepository){}
-    async getEvents(): Promise<Event[]>{
-        const events=await this.eventRepository.find({});
-        return events.map((event)=> plainToClass(Event, event));
+  constructor(private readonly eventRepository: EventsRepository) {}
+  async getEvents(): Promise<Event[]> {
+    try {
+      const events = await this.eventRepository.find({});
+      return events.map((event) => plainToClass(Event, event));
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
     }
+  }
 
-    async getEventById(title: string): Promise<any>{
-        const event= await this.eventRepository.findOne({title});
-        if(event)
-        {
-            return event;
+  async getEventById(title: string): Promise<any> {
+    try {
+      const event = await this.eventRepository.findOne({ title });
+      if (event) {
+        return event;
+      } else {
+        throw new NotFoundException('User not found');
+      }
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  async createEvent(createEvent: EventModel) {
+    try {
+      return this.eventRepository.create(createEvent);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  async updateEvent(
+    title: string,
+    updateEventDto: UpdateEventDto,
+  ): Promise<Event> {
+    try {
+        const event = await this.eventRepository.findOne({ title });
+        if (!event) {
+            throw new NotFoundException('User not found');
         }
-        else{
-            throw new HttpException('User not found', HttpStatus.BAD_REQUEST)
-        }
+        return this.eventRepository.findOneAndUpdate({ title }, updateEventDto);
         
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
     }
 
-    async createEvent(createEvent: EventModel){
-        return this.eventRepository.create(createEvent);
-    }
-
-
-    async updateEvent(title: string ,updateEventDto: UpdateEventDto): Promise<Event>{
-        const event=await this.eventRepository.findOne({title});
-        if(!event)
-        {
-            throw new UnprocessableEntityException("User Not Found");
-        }
-
-        return this.eventRepository.findOneAndUpdate({title}, updateEventDto);
-    }
-
-
-
+  }
 }
