@@ -14,8 +14,8 @@ export class RoleService {
 
     }
 
-    async getRolesById(id: string): Promise<Role>{
-        const role=await this.roleRepository.findOne({id});
+    async getRolesById(_id: string): Promise<Role>{
+        const role=await this.roleRepository.findOne({_id});
         if(role){
             return role;
         }else{

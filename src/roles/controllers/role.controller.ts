@@ -16,6 +16,7 @@ export class RoleController {
 
     @Get(':id')
     getOne(@Param('id') roleId: string ): Promise<Role>{
+        console.log("id", roleId);
         return this.roleService.getRolesById(roleId);
     }
 

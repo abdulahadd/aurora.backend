@@ -11,9 +11,29 @@ import { UserModel } from '../../Models/user.model';
 export class UsersService {
     constructor(private readonly usersRepository: UsersRepository){}
 
+
+    createObjectWithNonNullValues(data) {
+        const result = {};
+    
+        for (const key in data) {
+            if (data.hasOwnProperty(key) && data[key] !== null) {
+                result[key] = data[key];
+            }
+        }
+    
+        return result;
+    }
+
     async getUsers(): Promise<User[]>{
-        const users=await this.usersRepository.find({});
-        console.log(users)
+        const users=await this.usersRepository.find({orgId: "Aurora"});
+        return users.map((user)=> plainToClass(SerializedUser, user));
+    }
+
+    async listUsers(orgId: string=null, role:string= null): Promise<User[]>{
+        const data={orgId, role};
+        const filteredObject = this.createObjectWithNonNullValues(data);
+        //console.log(filteredObject);
+        const users=await this.usersRepository.find(filteredObject);
         return users.map((user)=> plainToClass(SerializedUser, user));
     }
 

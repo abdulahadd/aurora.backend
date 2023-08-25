@@ -18,6 +18,10 @@ export class EventModel {
     @IsString()
     @IsNotEmpty()
     end: Date;
+    
+    @IsString()
+    @IsNotEmpty()
+    orgId: string;
  
 
 }
