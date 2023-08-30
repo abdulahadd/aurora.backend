@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Param,
+  ParseArrayPipe,
   Patch,
   Post,
   Query,
@@ -25,21 +26,30 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(SuperUserGuard)
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get('/all/:s_username')
-  async getUsers(): Promise<User[]> {
-    return this.userService.getUsers();
+  async getUsers(): Promise<SerializedUser[]> {
+    const users = await this.userService.getUsers();
+    return users;
   }
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Get('/list/:s_username')
+
+  @Get('/list')
   async ListUsers(
     @Query("orgId") orgId: string=null,
-    @Query("role") role: string=null,
   ): Promise<User[]> {
-    console.log(orgId, role)
-    return this.userService.listUsers(orgId, role);
+
+    const users=await this.userService.listUsers(orgId);
+    return users;
   }
+
+  @Get('/by-ids')
+  async getUsersByList(@Query('ids', new ParseArrayPipe({ items: String, separator: ',' })) list: string[]): Promise<User[]> {
+    const user = await this.userService.getUsersbyList(list);
+    return user;
+  }
+
+  
 
   @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
@@ -52,7 +62,6 @@ export class UsersController {
   @Post('')
   @UsePipes(ValidationPipe)
   async createUser(@Body() user: UserModel): Promise<User> {
-    console.log('Body: ', user);
     return this.userService.createUser(user);
   }
 

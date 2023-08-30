@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { FilterQuery, Model } from 'mongoose';
 import { User, UserDocument } from '../Models/user.schema';
+import { SerializedUser } from '../utils/types';
 
 
 @Injectable()
@@ -13,9 +14,10 @@ export class UsersRepository {
         return this.userModel.findOne(userFilterQuery).lean();
     }
 
-    async find(userFilterQuery: FilterQuery<User>): Promise<User[]>{
+    async find(userFilterQuery: FilterQuery<User>): Promise<SerializedUser[]>{
         return this.userModel.find(userFilterQuery).lean();
     }
+
 
     async create(user: User): Promise<User>{
         const newUser = new this.userModel(user);

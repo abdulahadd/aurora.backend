@@ -16,6 +16,9 @@ export class Event {
     @Prop({required: true})
     orgId: string;
 
+    @Prop()
+    users: string[];
+
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);

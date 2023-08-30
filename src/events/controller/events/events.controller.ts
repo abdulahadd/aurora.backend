@@ -27,7 +27,7 @@ export class EventsController {
   }
 
   @Get('/:id')
-  async getUserByUsername(@Param('id') Id: string): Promise<Event> {
+  async getEventById(@Param('id') Id: string): Promise<Event> {
     try {
       const event = await this.eventService.getEventById(Id);
       return event;
@@ -35,6 +35,18 @@ export class EventsController {
       throw new HttpException(error.message, error.status);
     }
   }
+
+  @Get('/org/:id')
+  async getEventByOrg(@Param('id') org: string): Promise<Event> {
+    try {
+      const event = await this.eventService.getEventByOrg(org);
+      return event;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+
 
   @Post('')
   async createEvent(@Body() event: EventModel): Promise<Event> {
