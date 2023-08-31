@@ -17,14 +17,13 @@ import { UserModel } from '../../Models/user.model';
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-
   async getUsers(): Promise<SerializedUser[]> {
     const users = await this.usersRepository.find({});
     return users.map((user) => plainToClass(SerializedUser, user));
   }
 
   async listUsers(orgId: string = null): Promise<User[]> {
-    const users = await this.usersRepository.find({orgId});
+    const users = await this.usersRepository.find({ orgId });
     return users.map((user) => plainToClass(SerializedUser, user));
   }
 
@@ -34,9 +33,8 @@ export class UsersService {
         _id: { $in: list },
       });
       return users.map((user) => plainToClass(SerializedUser, user));
-    }
-    else{
-        throw new NotFoundException("List not found")
+    } else {
+      throw new NotFoundException('List not found');
     }
   }
 

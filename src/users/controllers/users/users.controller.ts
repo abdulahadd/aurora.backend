@@ -43,7 +43,7 @@ export class UsersController {
     return users;
   }
 
-  @Get('/by-ids')
+  @Get('/ids')
   async getUsersByList(@Query('ids', new ParseArrayPipe({ items: String, separator: ',' })) list: string[]): Promise<User[]> {
     const user = await this.userService.getUsersbyList(list);
     return user;
