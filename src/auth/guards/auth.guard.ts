@@ -29,9 +29,7 @@ import {
             secret: jwtConstants.secret
           }
         );
-        // 💡 We're assigning the payload to the request object here
-        // so that we can access it in our route handlers
-        //console.log(payload);
+        
         request['user'] = payload;
         if(params.s_username!== payload.username)
         {

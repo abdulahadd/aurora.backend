@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsBoolean, IsDate, IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 
 export class EventModel { 
@@ -18,6 +18,13 @@ export class EventModel {
     @IsString()
     @IsNotEmpty()
     end: Date;
+    
+    @IsString()
+    @IsNotEmpty()
+    orgId: string;
+
+    @IsArray()
+    users: string[];
  
 
 }

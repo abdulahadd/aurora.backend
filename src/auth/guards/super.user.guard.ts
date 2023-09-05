@@ -17,7 +17,7 @@ import { UsersService } from '../../users/services/users/users.service';
       const params=request.params;
       console.log(params);
       const user= await this.userService.getUserByUsername(params.s_username);
-      if(user.role==='SuperUser')
+      if(user.role==='64c2447ec9d9fb421a18ec4c')
         return true;
         else
             throw new UnauthorizedException("only super user can access");

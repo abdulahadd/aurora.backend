@@ -36,6 +36,19 @@ export class EventsService {
     }
   }
 
+  async getEventByOrg(orgId: string): Promise<any> {
+    try {
+      const event = await this.eventRepository.find({ orgId });
+      if (event) {
+        return event;
+      } else {
+        throw new NotFoundException('User not found');
+      }
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
   async createEvent(createEvent: EventModel) {
     try {
       return this.eventRepository.create(createEvent);
