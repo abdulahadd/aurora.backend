@@ -51,15 +51,15 @@ export class CommentsService {
     }
   
     async updateComment(
-      title: string,
+      _id: string,
       updateCommentDto: UpdateCommentDto,
     ): Promise<Comment> {
       try {
-          const comment = await this.commentRepository.findOne({ title });
+          const comment = await this.commentRepository.findOne({ _id });
           if (!comment) {
               throw new NotFoundException('User not found');
           }
-          return this.commentRepository.findOneAndUpdate({ title }, updateCommentDto);
+          return this.commentRepository.findOneAndUpdate({ _id }, updateCommentDto);
           
       } catch (error) {
         throw new HttpException(error.message, error.status);

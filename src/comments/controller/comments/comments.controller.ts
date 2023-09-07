@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from '@nestjs/common';
 import { CommentsService } from '../../service/comments/comments.service';
 import { Comment } from '../../models/commentSchema';
 import { CommentModel } from '../../models/commentModel';
@@ -48,13 +48,23 @@ export class CommentsController {
       }
     }
   
-    @Patch('/:title')
+    @Patch('/:id')
     async updateUser(
-      @Param('title') Id: string,
+      @Param('id') Id: string,
       @Body() updateCommentDto: UpdateCommentDto,
     ): Promise<Comment> {
       try {
         return this.commentService.updateComment(Id, updateCommentDto);
+      } catch (error) {
+        throw new HttpException(error.message, error.status);
+      }
+    }
+
+    @Delete('/:id')
+    async deleteUser(@Param('id') Id: string)
+    {
+      try {
+        return this.commentService.deleteComment(Id);
       } catch (error) {
         throw new HttpException(error.message, error.status);
       }
