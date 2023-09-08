@@ -11,7 +11,8 @@ export class CommentsController {
     @Get('')
     async getComments(): Promise<Comment[]> {
       try {
-        return this.commentService.getComments();
+        const comments=this.commentService.getComments();
+        return comments;
       } catch (error) {
         throw new HttpException(error.message, error.status);
       }

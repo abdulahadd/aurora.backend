@@ -1,4 +1,4 @@
-import { IsArray, IsBoolean, IsDate, IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsBoolean, IsDate, IsEmail, IsNotEmpty, IsString, isBoolean, isNotEmpty } from "class-validator";
 
 
 export class CommentModel { 
@@ -11,6 +11,11 @@ export class CommentModel {
     @IsString()
     @IsNotEmpty()
     eventId: string;
+
+    @IsNotEmpty()
+    @IsBoolean()
+    isActive: boolean;
+    
 
     @IsString()
     @IsNotEmpty()

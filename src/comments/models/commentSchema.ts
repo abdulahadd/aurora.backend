@@ -11,6 +11,9 @@ export class Comment {
     eventId: string;
 
     @Prop({ required: true })
+    isActive: boolean;
+
+    @Prop({ required: true })
     comment: string;
 
 }

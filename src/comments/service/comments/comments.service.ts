@@ -10,7 +10,13 @@ export class CommentsService {
     async getComments(): Promise<Comment[]> {
       try {
         const comments = await this.commentRepository.find({});
-        return comments;
+        const activeComments=comments.map((comment)=>{
+          if(comment.isActive===true)
+            {
+              return comment;
+            }
+        })
+        return activeComments;
       } catch (error) {
         throw new HttpException(error.message, error.status);
       }
@@ -31,9 +37,15 @@ export class CommentsService {
   
     async getCommentByEvent(eventId: string): Promise<any> {
       try {
-        const comment = await this.commentRepository.find({ eventId });
-        if (comment) {
-          return comment;
+        const comments = await this.commentRepository.find({ eventId });
+        if (comments) {
+          const activeComments=comments.map((comment)=>{
+            if(comment.isActive===true)
+              {
+                return comment;
+              }
+          })
+          return activeComments;
         } else {
           throw new NotFoundException('User not found');
         }
@@ -73,7 +85,7 @@ export class CommentsService {
             if (!comment) {
                 throw new NotFoundException('Comment not found');
             }
-            return this.commentRepository.deleteComment({_id});
+            return this.commentRepository.findOneAndUpdate({_id}, {isActive: false});
             
         } catch (error) {
           throw new HttpException(error.message, error.status);
