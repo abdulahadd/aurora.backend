@@ -21,4 +21,14 @@ export class CommentModel {
     @IsNotEmpty()
     comment: string;
 
+    @IsDate()
+    @IsNotEmpty()
+    time: Date;
+
+    @IsNotEmpty()
+    @IsBoolean()
+    isEdited: boolean;
+
+
+
 }

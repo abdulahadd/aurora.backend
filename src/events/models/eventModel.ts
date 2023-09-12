@@ -10,7 +10,6 @@ export class EventModel {
 
     @IsString()
     @IsNotEmpty()
-    @IsEmail()
     @IsDate()
     start: Date;
 

@@ -14,8 +14,8 @@ export class OrganisationService {
 
     }
 
-    async getOrganisationsById(id: string): Promise<Organisation>{
-        const org=await this.orgRepository.findOne({id});
+    async getOrganisationsById(_id: string): Promise<Organisation>{
+        const org=await this.orgRepository.findOne({_id});
         if(org){
             return org;
         }else{
