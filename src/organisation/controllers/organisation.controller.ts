@@ -15,8 +15,8 @@ export class OrganisationController {
     }
 
     @Get(':id')
-    getOne(@Param('id') roleId: string ): Promise<Organisation>{
-        return this.orgService.getOrganisationsById(roleId);
+    getOne(@Param('id') orgId: string ): Promise<Organisation>{
+        return this.orgService.getOrganisationsById(orgId);
     }
 
     @Post('')

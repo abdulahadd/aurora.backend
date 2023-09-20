@@ -17,19 +17,19 @@ export class EventsService {
   async getEvents(): Promise<Event[]> {
     try {
       const events = await this.eventRepository.find({});
-      return events.map((event) => plainToClass(Event, event));
+      return events;
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
 
-  async getEventById(title: string): Promise<any> {
+  async getEventById(_id: string): Promise<any> {
     try {
-      const event = await this.eventRepository.findOne({ title });
+      const event = await this.eventRepository.findOne({ _id });
       if (event) {
         return event;
       } else {
-        throw new NotFoundException('User not found');
+        throw new NotFoundException('Event not found');
       }
     } catch (error) {
       throw new HttpException(error.message, error.status);
