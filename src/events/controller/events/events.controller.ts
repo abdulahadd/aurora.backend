@@ -57,9 +57,9 @@ export class EventsController {
     }
   }
 
-  @Patch('/:title')
+  @Patch('/:id')
   async updateUser(
-    @Param('title') Id: string,
+    @Param('id') Id: string,
     @Body() updateEventDto: UpdateEventDto,
   ): Promise<Event> {
     try {

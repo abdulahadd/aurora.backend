@@ -41,10 +41,6 @@ import {
       return true;
     }
   
-    // private extractTokenFromCookie(request: Request): string | undefined {
-    //   const data = request.cookies?.['Login-Cookie'];
-    //   return data|| undefined;
-    // }
 
     private extractTokenFromHeader(request: Request): string | undefined {
       const [type, token] = request.headers.authorization?.split(' ') ?? [];

@@ -58,15 +58,15 @@ export class EventsService {
   }
 
   async updateEvent(
-    title: string,
+    _id: string,
     updateEventDto: UpdateEventDto,
   ): Promise<Event> {
     try {
-        const event = await this.eventRepository.findOne({ title });
+        const event = await this.eventRepository.findOne({ _id });
         if (!event) {
             throw new NotFoundException('User not found');
         }
-        return this.eventRepository.findOneAndUpdate({ title }, updateEventDto);
+        return this.eventRepository.findOneAndUpdate({ _id }, updateEventDto);
         
     } catch (error) {
       throw new HttpException(error.message, error.status);

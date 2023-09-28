@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, { Document, mongo } from "mongoose";
+import { Document } from "mongoose";
 
 export type EventDocument = Event & Document;
 @Schema()
