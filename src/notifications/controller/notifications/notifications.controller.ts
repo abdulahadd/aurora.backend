@@ -30,6 +30,7 @@ export class NotificationsController {
     }
   }
 
+  @Get('user/:userId')
   async getNotificationsForUser(
     @Param('userId') userId: string,
     @Query('page') page: number = 1,
@@ -43,7 +44,7 @@ export class NotificationsController {
       );
       return notifications;
     } catch (error) {
-      // Handle errors appropriately (e.g., return an error response)
+      throw new HttpException(error.message, error.status);
     }
   }
 

@@ -64,7 +64,6 @@ export class NotificationsService {
         page,
         limit,
       );
-
       return notifications;
     } catch (error) {
       throw new Error('Error fetching notifications: ' + error.message);
