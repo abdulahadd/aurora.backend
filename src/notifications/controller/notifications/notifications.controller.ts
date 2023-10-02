@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body, Put, HttpException, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put, HttpException, Patch, Query } from '@nestjs/common';
 import { NotificationsService } from '../../service/notifications/notifications.service';
 import { NotificationDto, UpdateNotificationDto } from '../../dtos/notificationDto';
 import { Notification } from '../../models/notSchema';
@@ -6,6 +6,7 @@ import { Notification } from '../../models/notSchema';
 @Controller('notifications')
 export class NotificationsController {
   constructor(private readonly notificationsService: NotificationsService) {}
+
 
   @Get()
   async getNotifications() {
@@ -26,6 +27,23 @@ export class NotificationsController {
       return notification;
     } catch (error) {
         throw new HttpException(error.message, error.status);
+    }
+  }
+
+  async getNotificationsForUser(
+    @Param('userId') userId: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    try {
+      const notifications = await this.notificationsService.getNotificationsForUser(
+        userId,
+        page,
+        limit,
+      );
+      return notifications;
+    } catch (error) {
+      // Handle errors appropriately (e.g., return an error response)
     }
   }
 
