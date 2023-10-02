@@ -6,13 +6,29 @@ import {
 } from '@nestjs/common';
 import { NotificationsRepository } from '../../repository/notifications.repository';
 import { Notification } from '../../models/notSchema';
-import { NotificationDto, UpdateNotificationDto } from '../../dtos/notificationDto';
+import {
+  NotificationDto,
+  UpdateNotificationDto,
+} from '../../dtos/notificationDto';
 
 @Injectable()
 export class NotificationsService {
   constructor(
     private readonly notificationRepository: NotificationsRepository,
   ) {}
+
+  async createNotification(
+    createNotificationDto: Notification,
+  ): Promise<Notification> {
+    try {
+      const notification = await this.notificationRepository.create(
+        createNotificationDto,
+      );
+      return notification;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
 
   async getNotifications(): Promise<Notification[]> {
     try {
@@ -36,13 +52,21 @@ export class NotificationsService {
     }
   }
 
-  async createNotification(
-    createNotificationDto: Notification,
-  ): Promise<Notification> {
+  async getNotificationsForUser(
+    userId: string,
+    page: number,
+    limit: number,
+  ): Promise<Notification[]> {
     try {
-      return this.notificationRepository.create(createNotificationDto);
+      const skip = (page - 1) * limit;
+      const notifications = await this.notificationRepository.findPage(
+        { users: userId },
+        page,
+        limit,
+      );
+      return notifications;
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new Error('Error fetching notifications: ' + error.message);
     }
   }
 

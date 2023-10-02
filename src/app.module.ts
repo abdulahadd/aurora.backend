@@ -8,9 +8,10 @@ import { OrganisationModule } from './organisation/organisation.module';
 import { EventsModule } from './events/events.module';
 import { CommentsModule } from './comments/comments.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { GatewwayModule } from './gateway/gateway.module';
 
 @Module({
-  imports: [UsersModule, MongooseModule.forRoot('mongodb://localhost/iproject'), AuthModule,  PermissionsModule,RolesModule, OrganisationModule, EventsModule, CommentsModule, NotificationsModule],
+  imports: [GatewwayModule,UsersModule, MongooseModule.forRoot('mongodb://localhost/iproject'), AuthModule,  PermissionsModule,RolesModule, OrganisationModule, EventsModule, CommentsModule, NotificationsModule],
   controllers: [],
   providers: [],
 })

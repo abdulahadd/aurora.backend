@@ -18,9 +18,21 @@ export class NotificationsRepository {
     }
   }
 
+  async findPage(notificationFilterQuery: FilterQuery<Notification>, page: number, limit: number): Promise<Notification[]> {
+    try {
+      const skip = (page - 1) * limit;
+      return this.notificationModel.find(notificationFilterQuery).lean().skip(skip)
+      .limit(limit)
+      .exec();
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
   async find(notificationFilterQuery: FilterQuery<Notification>): Promise<Notification[]> {
     try {
-      return this.notificationModel.find(notificationFilterQuery).lean();
+      return this.notificationModel.find(notificationFilterQuery).lean()
+      
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
